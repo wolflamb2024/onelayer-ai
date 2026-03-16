@@ -28,6 +28,12 @@ Use when your branch has messy, unstructured commits and you want to reorganize 
 
 **When to use:** You finished the work but your commit history is rough — WIP commits, mixed concerns, wrong ordering. You want a clean history before opening a PR.
 
+### `/checkout-branch-worktree` — Work on a branch in an isolated worktree
+
+Use when you want to switch to a branch without affecting your main working tree. The assistant detects the git context, asks for the branch name, creates (or reuses) a worktree under `.worktrees/<branch>/`, and switches all subsequent work into it. Supports local branches, remote-only branches, and entirely new branches. Nothing is pushed — the worktree is purely local.
+
+**When to use:** You want to work on a different branch in parallel, review someone else's branch, or start a new feature without disturbing your current checkout.
+
 ### `/interactive-restructure-commits` — Clean up with full control
 
 Same as `/restructure-commits`, but gives you more control during execution. After the commit plan is proposed, you can choose to:
@@ -57,7 +63,9 @@ onelayer-ai/
 │   │   └── SKILL.md
 │   ├── interactive-restructure-commits/
 │   │   └── SKILL.md
-│   └── restructure-commits/
+│   ├── restructure-commits/
+│   │   └── SKILL.md
+│   └── checkout-branch-worktree/
 │       └── SKILL.md
 ├── rules/
 │   ├── commits.md

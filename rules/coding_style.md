@@ -1,5 +1,7 @@
 # Go Coding Style Rules (Compact)
 
+For the full detailed guide with examples, see [style_guide.md](style_guide.md).
+
 ## 1) Priorities (in order)
 1. Clarity
 2. Simplicity
@@ -34,11 +36,14 @@ If tradeoffs conflict, optimize for the highest item above.
   - verb-like when performing action (`WriteTo`)
 - Keep local naming consistent within file/package.
 - Avoid vague package names like `util`, `helper`, `common`.
+- Beware of variable shadowing (`:=` in inner scope creates new variable); prefer stomping or explicit `=` assignment when reusing outer variable.
+- Don't shadow standard package names (e.g., `url := "..."` blocks access to `net/url`).
 
 ## 4) Package and file structure
 - Package boundaries should reflect domain cohesion and caller ergonomics.
 - Keep files focused; avoid giant files and excessive tiny-file fragmentation.
 - `doc.go` is optional for package docs.
+- Test double packages: append `test` to original package name (e.g., `creditcardtest`).
 
 ## 5) Imports
 - Mandatory grouping order:
@@ -53,11 +58,12 @@ If tradeoffs conflict, optimize for the highest item above.
 - Prefer structured/typed/sentinel errors over string matching.
 - Use `errors.Is` / `errors.As` for classification.
 - Add context only when useful and non-duplicative.
+- Each function in the call chain should add only its own context; don't repeat info from lower layers.
 - Use `%w` only when callers should unwrap; treat wrapping as API surface.
 - Prefer `%w` at end: `"context: %w"`.
 - At system boundaries (RPC/IPC/storage), map to canonical error space/codes.
 - Avoid double logging: if returning an error, usually let caller log.
-- Log messages should be actionable and avoid PII.
+- Log messages should be actionable and avoid PII. Use `slog.Error` sparingly (causes flush).
 - Initialization/config errors should bubble to `main`, which logs actionable message and exits with code `2`.
 
 ## 7) Panics and process termination
@@ -70,11 +76,14 @@ If tradeoffs conflict, optimize for the highest item above.
 
 ## 8) Documentation
 - Document non-obvious behavior, constraints, cleanup requirements, and important error semantics.
-- Don't over-document obvious params.
-- Context cancellation behavior is implicit unless special.
-- Concurrency guarantees should be documented when non-obvious or contract-critical.
+- Don't over-document obvious params; explain **why** they are interesting.
+- Context cancellation behavior is implicit unless special (e.g., returns nil on cancel, or has other stop mechanisms).
+- Read-only ops are assumed concurrent-safe; mutating ops are not. Document exceptions.
+- Explicitly document cleanup requirements (e.g., "Call Stop to release resources").
+- Document significant sentinel errors and error types callers should expect.
 - Prefer runnable examples for usage.
 - Use proper godoc formatting (paragraph spacing, headings, indented blocks).
+- Use "signal boosting" comments when code looks like a common pattern but behaves differently.
 
 ## 9) Variables and initialization
 - Prefer `:=` for non-zero initialization.
@@ -101,6 +110,7 @@ If tradeoffs conflict, optimize for the highest item above.
 - Keep pass/fail decisions in `Test` functions.
 - Prefer table-driven tests over repetitive assertions.
 - Avoid assertion-helper patterns; helpers should mostly do setup/cleanup.
+- Validation functions should return `error` rather than taking `testing.T`.
 - Test helpers that fail setup should use `t.Helper()` + `t.Fatal*` with clear context.
 - Do not call `t.Fatal*` from goroutines (use `t.Error*` + return).
 - Use field names in large table test structs.
@@ -108,6 +118,7 @@ If tradeoffs conflict, optimize for the highest item above.
 - Use `TestMain` only when all tests need shared setup + teardown.
 - `sync.Once` setup is okay for expensive shared setup without teardown.
 - Prefer real transports in integration tests.
+- For acceptance testing of interfaces, create `*test` packages with blackbox validation functions.
 
 ## 13) String building
 - Use `+` for simple concatenation.

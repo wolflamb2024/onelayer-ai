@@ -4,7 +4,7 @@ Shared AI coding assistant skills and rules for the OneLayer team. This repo is 
 
 ## What's inside
 
-**Skills** — slash-command workflows that handle git commits following OneLayer conventions. All commit messages use the `<package>: <summary>` format, enforce atomicity, and follow the rules defined in `rules/commits.md` and `rules/working_guide.md`.
+**Skills** — slash-command workflows for OneLayer engineering tasks, including commit hygiene, branch/worktree operations, and automated code review against team style rules.
 
 **Rules** — coding and workflow conventions loaded as persistent context (see [Rules](#rules) below).
 
@@ -44,6 +44,12 @@ Same as `/restructure-commits`, but gives you more control during execution. Aft
 
 **When to use:** Same situation as `/restructure-commits`, but you want to inspect or adjust each commit before it lands.
 
+### `/review-changes` — Review code against style rules
+
+Use when you want an automated review of your branch's changes against OneLayer Go coding standards. The assistant diffs your branch against `main`, reads each changed file in full, applies every rule from `coding_style.md` and `style_guide.md`, checks for bugs, race conditions, and security issues, and writes a structured `review.md` report with actionable findings ranked by severity. No source code is modified - it only reads and produces the report.
+
+**When to use:** Before opening a PR, to catch style violations, bugs, and missing error handling that might come up in human review.
+
 ## Rules
 
 Rules are loaded as persistent context into your AI coding assistant. They define OneLayer conventions:
@@ -51,6 +57,7 @@ Rules are loaded as persistent context into your AI coding assistant. They defin
 - `commits.md` — Commit structure, atomicity, message format.
 - `working_guide.md` — Issue types, branch naming, PR conventions, commit ordering.
 - `coding_style.md` — Go coding style rules (naming, error handling, testing, imports, etc.).
+- `style_guide.md` — Additional Go conventions for readability, API design, and maintainability.
 
 ## Repository structure
 
@@ -62,6 +69,8 @@ onelayer-ai/
 │   ├── interactive-commit/
 │   │   └── SKILL.md
 │   ├── interactive-restructure-commits/
+│   │   └── SKILL.md
+│   ├── review-changes/
 │   │   └── SKILL.md
 │   ├── restructure-commits/
 │   │   └── SKILL.md

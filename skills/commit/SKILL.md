@@ -11,7 +11,7 @@ Commit already-staged changes with a well-crafted message following project comm
 
 ## Hard Rules
 
-- **Never** modify, edit, or create any files or code
+- **Never** modify, edit, or create any files or code — **except** `go.mod` and `go.sum` when splitting Go module changes into atomic commits (see section 4)
 - **Never** push to any remote
 - **Never** switch or create branches
 - **Never** stage or unstage files — only commit what is already staged
@@ -47,7 +47,8 @@ Follow these conventions exactly:
 - Lowercase start (no capital after the colon)
 - No trailing period
 - Short — completes the sentence "This change modifies package `<package>` to ___"
-- Use a verb that describes the result (e.g., "fix", "add", "remove", "support", "improve")
+- Use a verb that describes the **functional result**, not the mechanical file operation (e.g., "fix", "document", "support", "improve")
+- Prefer functional verbs: `topology: document go package` NOT `topology: add package documentation`
 
 **Blank line**
 
@@ -56,6 +57,12 @@ Follow these conventions exactly:
 - Explain **what** changed and **why**
 - No Markdown, no HTML — plain text only
 - Add relevant details (e.g., benchmark data, algorithm references) when useful
+
+**go.mod / go.sum commits:**
+When the staged changes include `go.mod` or `go.sum`, split them into separate atomic commits — one per logical operation:
+- Module initialization: `go.mod: init {modulePath}` (e.g., `go.mod: init go.onelayer.dev/x/topology`)
+- Each new dependency: `go.mod: get {dependencyPath}` (e.g., `go.mod: get go.onelayer.dev/x/component`)
+You may run `go mod init` and `go get` commands to reconstruct these changes step by step, staging and committing after each operation. This is the only case where modifying files is permitted.
 
 **Important:** Never add a Co-Authored-By trailer or any attribution line.
 

@@ -6,7 +6,7 @@ A Pull Request should contain multiple descriptive commits. Each commit should b
 
 The first line is a short summary prefixed by the primary affected package.
 
-Write it to complete the sentence "This change modifies package X to _____." Don't start with a capital letter, don't make it a complete sentence, and actually summarize the change result.
+Write it to complete the sentence "This change modifies package X to _____." Don't start with a capital letter, don't make it a complete sentence, and actually summarize the change result. Use a verb that describes the functional outcome, not the mechanical file operation. For example, prefer `topology: document go package` over `topology: add package documentation`.
 
 In the example: "This change modifies package math to improve Sin, Cos and Tan precision for very large arguments."
 
@@ -24,6 +24,7 @@ Some rules of thumb:
 3. The scope of a "feature" commit should affect a single package.
 4. If you find yourself struggling to attribute a commit to a single package, then you should probably split the commit into two commits.
 5. When in doubt, split the commit into two commits.
+6. Go module changes (go.mod / go.sum) must be split: one commit per `go mod init`, one commit per `go get` dependency.
 
 Here are some good reviewable commits:
 1. Renaming a variable, and updating all references to that variable.
@@ -37,6 +38,15 @@ Here are some not-so-reviewable commits:
 1. Fixing a typo in a package alongside a large refactor of another package.
 2. Testing a type/function separately from its implementation.
 3. Renaming a variable without updating all references to that variable.
+
+### go.mod / go.sum Commits
+
+Changes to `go.mod` and `go.sum` must be committed with fine granularity — one commit per operation:
+
+- Module initialization: `go.mod: init {modulePath}` (e.g., `go.mod: init go.onelayer.dev/x/topology`)
+- Each dependency addition: `go.mod: get {dependencyPath}` (e.g., `go.mod: get go.onelayer.dev/x/component`)
+
+Never bundle multiple dependency additions into a single commit. Each `go get` produces its own atomic commit.
 
 The motivation behind keeping commits atomic is to make it easier to identify the source of a bug, and to make it easier to revert a change if it introduces a bug. Using git bisect in search for the malicious commit is done by recompiling the system at each "bisection" point and then running some checks against the compiled binary. This is not possible if the commits are not atomic since the system probably just won't even compile.
 

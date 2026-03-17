@@ -11,11 +11,11 @@ Reorganize the current branch's commits into clean, atomic, convention-following
 
 ## Hard Rules
 
-1. **Never modify file contents.** Only rearrange existing changes into new commits.
+1. **Never modify file contents** — only rearrange existing changes into new commits. **Exception:** you may run `go mod init` and `go get` to reconstruct `go.mod` / `go.sum` changes as separate atomic commits.
 2. **Never push.** This skill only creates local commits.
 3. **Never run tests or builds.** The goal is purely git history rewriting.
 4. **Never delete or force-modify the original branch.** It stays untouched.
-5. **Only use read-only tools + Bash for git commands.** No Write or Edit tools.
+5. **Only use read-only tools + Bash for git and Go module commands.** No Write or Edit tools — except that Bash may run `go mod init` and `go get` to split module changes.
 
 ## Conventions
 
@@ -27,6 +27,7 @@ Key commit message format reminder:
 - First line: `<package>: <summary>` — completes "This change modifies package X to ___"
 - Lowercase start, no period, no complete sentence on first line
 - Blank line, then body with complete sentences explaining what and why
+- Use functional verbs that describe the result, not the file operation: `topology: document go package` NOT `topology: add package documentation`
 
 ## Phase 1: Setup
 
@@ -74,7 +75,10 @@ Present a numbered list of proposed commits. For each commit show:
 
 Order commits to tell the story of the feature layer by layer:
 
-1. **go.mod / go.sum** — dependency changes first (isolated commit)
+1. **go.mod / go.sum** — dependency changes first, split into one commit per operation:
+   - `go.mod: init {modulePath}` for module initialization
+   - `go.mod: get {dependencyPath}` for each new dependency (one commit per dependency)
+   To produce these commits, run `go mod init` and individual `go get` commands, staging and committing after each.
 2. **doc.go / types / interfaces** — package documentation and type definitions
 3. **Implementation + tests** — core logic with its tests (same commit per package)
 4. **Server / API / handlers** — integration layer
@@ -135,4 +139,4 @@ Present the full plan and ask the user for approval before proceeding. Accept fe
 - **Branch name conflict**: If the suggested branch name already exists, ask for an alternative.
 - **Single file change**: Still follow the same process; a single commit is fine when appropriate.
 - **Binary files**: Include them in the appropriate commit but note them in the plan.
-- **go.mod/go.sum only changes**: These get their own commit even if small.
+- **go.mod/go.sum changes**: These must be split into one commit per `go mod init` and one commit per `go get` dependency, using the `go.mod: init ...` / `go.mod: get ...` naming convention.

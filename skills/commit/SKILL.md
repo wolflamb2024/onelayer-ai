@@ -61,7 +61,7 @@ Follow these conventions exactly:
 **go.mod / go.sum commits:**
 When the staged changes include `go.mod` or `go.sum`, split them into separate atomic commits — one per logical operation:
 - Module initialization: `go.mod: init {modulePath}` (e.g., `go.mod: init go.onelayer.dev/x/topology`)
-- Each new dependency: `go.mod: get {dependencyPath}` (e.g., `go.mod: get go.onelayer.dev/x/component`)
+- Each new dependency group: `go.mod: get {dependencyPath}` (e.g., `go.mod: get go.onelayer.dev/x/component`)
 You may run `go mod init` and `go get` commands to reconstruct these changes step by step, staging and committing after each operation. This is the only case where modifying files is permitted.
 
 **Important:** Never add a Co-Authored-By trailer or any attribution line.

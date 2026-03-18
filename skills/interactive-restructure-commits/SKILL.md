@@ -77,7 +77,7 @@ Order commits to tell the story of the feature layer by layer:
 
 1. **go.mod / go.sum** — dependency changes first, split into one commit per operation:
    - `go.mod: init {modulePath}` for module initialization
-   - `go.mod: get {dependencyPath}` for each new dependency (one commit per dependency)
+   - `go.mod: get {dependencyPath}` for each new dependency group (one commit per dependency group)
    To produce these commits, run `go mod init` and individual `go get` commands, staging and committing after each.
 2. **doc.go / types / interfaces** — package documentation and type definitions
 3. **Implementation + tests** — core logic with its tests (same commit per package)

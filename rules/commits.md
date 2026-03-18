@@ -24,7 +24,7 @@ Some rules of thumb:
 3. The scope of a "feature" commit should affect a single package.
 4. If you find yourself struggling to attribute a commit to a single package, then you should probably split the commit into two commits.
 5. When in doubt, split the commit into two commits.
-6. Go module changes (go.mod / go.sum) must be split: one commit per `go mod init`, one commit per `go get` dependency.
+6. Go module changes (go.mod / go.sum) must be split: one commit per `go mod init`, one commit per group of `go get` dependency. One group is all dependencies that has to be installed at commit X so commit X+1 can use it.
 
 Here are some good reviewable commits:
 1. Renaming a variable, and updating all references to that variable.
@@ -44,11 +44,9 @@ Here are some not-so-reviewable commits:
 Changes to `go.mod` and `go.sum` must be committed with fine granularity — one commit per operation:
 
 - Module initialization: `go.mod: init {modulePath}` (e.g., `go.mod: init go.onelayer.dev/x/topology`)
-- Each dependency addition: `go.mod: get {dependencyPath}` (e.g., `go.mod: get go.onelayer.dev/x/component`)
+- Each dependency group addition: `go.mod: get {dependencyPath1}, {dependencyPath2}, ...` (e.g., `go.mod: get go.onelayer.dev/x/component`)
 
-Never bundle multiple dependency additions into a single commit. Each `go get` produces its own atomic commit.
-
-The motivation behind keeping commits atomic is to make it easier to identify the source of a bug, and to make it easier to revert a change if it introduces a bug. Using git bisect in search for the malicious commit is done by recompiling the system at each "bisection" point and then running some checks against the compiled binary. This is not possible if the commits are not atomic since the system probably just won't even compile.
+One group of dependencies are all dependencies that have to be commited at commit X so it builds successfully on commit X+1 and go mod tidy is no action.
 
 
 Now it is a matter of where to share that knowledge. Here some tips:

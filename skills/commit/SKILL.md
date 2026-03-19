@@ -16,6 +16,7 @@ Commit already-staged changes with a well-crafted message following project comm
 - **Never** switch or create branches
 - **Never** stage or unstage files — only commit what is already staged
 - **Always** present the draft message to the user for approval before committing
+- **Always** verify that project builds successfully after each commit
 
 ## Procedure
 

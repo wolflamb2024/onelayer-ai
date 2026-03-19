@@ -16,6 +16,7 @@ Reorganize the current branch's commits into clean, atomic, convention-following
 3. **Never run tests or builds.** The goal is purely git history rewriting.
 4. **Never delete or force-modify the original branch.** It stays untouched.
 5. **Only use read-only tools + Bash for git and Go module commands.** No Write or Edit tools — except that Bash may run `go mod init` and `go get` to split module changes.
+6. **Always** verify that project builds successfully after each commit
 
 ## Conventions
 

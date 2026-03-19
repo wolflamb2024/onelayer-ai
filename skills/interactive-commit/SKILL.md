@@ -16,6 +16,7 @@ An interactive loop that repeats the commit workflow for multiple rounds. The us
 - **Never** switch or create branches
 - **Never** stage or unstage files — only commit what is already staged
 - **Always** present the draft message to the user for approval before committing
+- **Always** verify that project builds successfully after each commit
 
 ## Procedure
 

@@ -2,6 +2,8 @@
 
 A Pull Request should contain multiple descriptive commits. Each commit should be self-contained and atomic, which is a fancy way of saying that each commit should contain a single change, and that change should be complete and not dependent on any other commit. This is because each (good) commit is a unit of work that can be reviewed, tested, and merged independently.
 
+IMPORTANT RULE: Eeach commit has to build successfully.
+
 ### First Line
 
 The first line is a short summary prefixed by the primary affected package.

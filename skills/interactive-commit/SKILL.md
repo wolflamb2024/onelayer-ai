@@ -56,6 +56,7 @@ Follow these conventions exactly:
 - Short — completes the sentence "This change modifies package `<package>` to ___"
 - Use a verb that describes the **functional result**, not the mechanical file operation (e.g., "fix", "document", "support", "improve")
 - Prefer functional verbs: `topology: document go package` NOT `topology: add package documentation`
+- **Package path:** use the two most drilled-down (deepest) path elements, skipping `internal`. Example: `internal/assetquery/loader` → `assetquery/loader`. Single-element paths stay as-is.
 
 **Blank line**
 

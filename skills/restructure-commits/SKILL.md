@@ -29,6 +29,7 @@ Key commit message format reminder:
 - Lowercase start, no period, no complete sentence on first line
 - Blank line, then body with complete sentences explaining what and why
 - Use functional verbs that describe the result, not the file operation: `topology: document go package` NOT `topology: add package documentation`
+- Package path: use the two most drilled-down (deepest) path elements, skipping `internal`. Example: `internal/assetquery/loader` → `assetquery/loader`. Single-element paths stay as-is.
 
 ## Phase 1: Setup
 

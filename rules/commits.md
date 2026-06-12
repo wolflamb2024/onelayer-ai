@@ -10,6 +10,8 @@ The first line is a short summary prefixed by the primary affected package.
 
 Write it to complete the sentence "This change modifies package X to _____." Don't start with a capital letter, don't make it a complete sentence, and actually summarize the change result. Use a verb that describes the functional outcome, not the mechanical file operation. For example, prefer `topology: document go package` over `topology: add package documentation`.
 
+**Package path convention:** Use the two most drilled-down (deepest) path elements of the affected package, skipping `internal`. For example, if the affected package is `internal/assetquery/loader`, the commit prefix is `assetquery/loader`. If the package path has only one element (e.g., `topology`), use that single element.
+
 In the example: "This change modifies package math to improve Sin, Cos and Tan precision for very large arguments."
 
 Follow the first line with a blank line.

@@ -66,7 +66,9 @@ Follow these rules exactly:
 - **Active voice** throughout
 - **Include relevant links** to issues, other PRs, or external resources when available
 - Write in flowing prose — well-constructed sentences and paragraphs, not just bullet dumps
+- **Do not hard-wrap lines.** Write each paragraph as a single long line and let GitHub wrap it. Never break lines mid-sentence at ~80 characters or add leading indentation on continuation lines.
 - The description becomes the commit message body when merged, so keep it meaningful as plain text (Markdown is fine but remember git renders it as plain text)
+- **Include contextual notes when relevant** — for example: tool or generator versions used (e.g., protoc/protoc-gen-go versions when regenerating code), backward-compatibility impact (breaking changes, migration steps, or an explicit "no breaking changes" note), and any deployment or rollout considerations. Look at commit messages and changed files for clues about what context a reviewer would need.
 - Do not add Co-Authored-By trailers or attribution lines
 
 ### 6. Present for approval

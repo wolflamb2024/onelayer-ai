@@ -20,6 +20,8 @@ Follow the first line with a blank line.
 
 The rest provides context and explains what the change does. Write complete sentences with correct punctuation, like Go comments. Don't use HTML, Markdown, or other markup languages.
 
+The body should be a single paragraph. If you find yourself writing more than one paragraph, the commit is likely doing too much and should be split into multiple commits.
+
 Add relevant information like benchmark data if the change affects performance. Use [benchstat](https://godoc.org/golang.org/x/perf/cmd/benchstat) to format benchmark data.
 
 Some rules of thumb:

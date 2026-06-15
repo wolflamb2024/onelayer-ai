@@ -64,6 +64,7 @@ Follow these conventions exactly:
 - Complete sentences with correct punctuation
 - Explain **what** changed and **why**
 - No Markdown, no HTML — plain text only
+- **Single paragraph only** — if you need more than one paragraph, the commit is likely doing too much and should be split into multiple commits
 - Add relevant details (e.g., benchmark data, algorithm references) when useful
 
 **go.mod / go.sum commits:**

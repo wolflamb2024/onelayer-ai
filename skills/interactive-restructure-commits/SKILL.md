@@ -28,6 +28,7 @@ Key commit message format reminder:
 - First line: `<package>: <summary>` — completes "This change modifies package X to ___"
 - Lowercase start, no period, no complete sentence on first line
 - Blank line, then body with complete sentences explaining what and why
+- Body must be a single paragraph — if it needs more than one, the commit should be split
 - Use functional verbs that describe the result, not the file operation: `topology: document go package` NOT `topology: add package documentation`
 - Package path: use the two most drilled-down (deepest) path elements, skipping `internal`. Example: `internal/assetquery/loader` → `assetquery/loader`. Single-element paths stay as-is.
 
